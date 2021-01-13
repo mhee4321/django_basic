@@ -16,6 +16,7 @@ class Post(models.Model):
     # migration test
     # test = models.TextField()
 
+    # toString 역할
     def __str__(self):
         return self.title
 
