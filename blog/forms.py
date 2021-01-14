@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Comment
 
 class PostModelForm(forms.ModelForm):
     class Meta:
@@ -14,3 +14,8 @@ def min_length_3_validator(value):
 class PostForm(forms.Form):
     title = forms.CharField(validators=[min_length_3_validator])
     text = forms.CharField(widget=forms.Textarea)
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('author', 'text',)
