@@ -6,12 +6,14 @@ from .forms import PostModelForm, PostForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+# Comment 승인
 @login_required
 def comment_approve(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
     return redirect('post_detail', pk=comment.post.pk)
 
+# Comment 삭제
 @login_required
 def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
