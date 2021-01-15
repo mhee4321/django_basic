@@ -11,5 +11,7 @@
             <p>{{post.text|linebreaksbr}}</p>
         </div>
     {% endfor %}
+
+    {% include 'blog/post_pagination.html' with page=posts %}
 {% endblock %}}
 

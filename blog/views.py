@@ -5,6 +5,7 @@ from .models import Post, Comment
 from .forms import PostModelForm, PostForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Comment 승인
 @login_required
@@ -105,7 +106,18 @@ def post_detail(request, pk):
 
 # Post 목록
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    # posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    post_list = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    paginator = Paginator(post_list, 2)
+    page_no = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page_no)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
     return render(request, 'blog/post_list.html', {'posts':posts})
 
 
